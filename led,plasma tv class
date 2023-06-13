@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TV Control</title>
+  <style>
+    .tv-container {
+      width: 300px;
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+  
+    .status {
+      margin-bottom: 10px;
+    }
+  
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .details-container {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #fff;
+    }
+
+    .details-container h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="tv-container">
+    <h2>TV Control</h2>
+    <div class="status" id="status"></div>
+    <div class="buttons">
+      <button onclick="increaseVolume()">+</button>
+      <button onclick="decreaseVolume()">-</button>
+      <button onclick="setChannel(1)">Channel 1</button>
+      <button onclick="setChannel(50)">Channel 50</button>
+      <button onclick="resetTV()">Reset</button>
+    </div>
+  </div>
+
+  <div class="details-container" id="details">
+    <h3>TV Details</h3>
+  </div>
+
+  <script>
+    class TV {
+      constructor(brand, price, inches) {
+        this.brand = brand;
+        this.channel = 1;
+        this.price = price;
+        this.inches = inches;
+        this.on = false;
+        this.volume = 50;
+      }
+
+      increaseVolume() {
+        if (this.volume < 100) {
+          this.volume += 1;
+        }
+        this.updateStatus();
+      }
+
+      decreaseVolume() {
+        if (this.volume > 0) {
+          this.volume -= 1;
+        }
+        this.updateStatus();
+      }
+
+      setChannel(channel) {
+        if (channel >= 1 && channel <= 50) {
+          this.channel = channel;
+        }
+        this.updateStatus();
+      }
+
+      resetTV() {
+        this.channel = 1;
+        this.volume = 50;
+        this.updateStatus();
+      }
+
+      updateStatus() {
+        const statusElement = document.getElementById("status");
+        statusElement.textContent = `${this.brand} at channel ${this.channel}, volume ${this.volume}`;
+      }
+
+      displayDetails() {
+        const detailsElement = document.getElementById("details");
+        detailsElement.innerHTML = `
+          <h3>TV Details</h3>
+          <p><strong>Brand:</strong> ${this.brand}</p>
+          <p><strong>Price:</strong> $${this.price}</p>
+          <p><strong>Inches:</strong> ${this.inches}"</p>
+        `;
+      }
+    }
+
+    class LED extends TV {
+      constructor(brand, price, inches, screenThickness, energyUsage, lifespan, refreshRate) {
+        super(brand, price, inches);
+        this.screenThickness = screenThickness;
+        this.energyUsage = energyUsage;
+        this.lifespan = lifespan;
+        this.refreshRate = refreshRate;
+      }
+
+      viewingAngle(angle) {
+        console.log(`${this.brand} has a viewing angle of ${angle} degrees.`);
+      }
+
+      displayDetails() {
+        super.displayDetails();
+        const detailsElement = document.getElementById("details");
+        detailsElement.innerHTML += `
+          <p><strong>Screen Thickness:</strong> ${
