@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TV Control</title>
+  <style>
+    .tv-container {
+      width: 300px;
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+  
+    .status {
+      margin-bottom: 10px;
+    }
+  
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="tv-container">
+    <h2>TV Control</h2>
+    <div class="status" id="status"></div>
+    <div class="buttons">
+      <button onclick="increaseVolume()">+</button>
+      <button onclick="decreaseVolume()">-</button>
+      <button onclick="setChannel(1)">Channel 1</button>
+      <button onclick="setChannel(50)">Channel 50</button>
+      <button onclick="resetTV()">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    class TV {
+      constructor(brand, price, inches) {
+        this.brand = brand;
+        this.channel = 1;
+        this.price = price;
+        this.inches = inches;
+        this.on = false;
+        this.volume = 50;
+      }
+
+      increaseVolume() {
+        if (this.volume < 100) {
+          this.volume += 1;
+        }
+        this.updateStatus();
+      }
+
+      decreaseVolume() {
+        if (this.volume > 0) {
+          this.volume -= 1;
+        }
+        this.updateStatus();
+      }
+
+      setChannel(channel) {
+        if (channel >= 1 && channel <= 50) {
+          this.channel = channel;
+        }
+        this.updateStatus();
+      }
+
+      resetTV() {
+        this.channel = 1;
+        this.volume = 50;
+        this.updateStatus();
+      }
+
+      updateStatus() {
+        const statusElement = document.getElementById("status");
+        statusElement.textContent = `${this.brand} at channel ${this.channel}, volume ${this.volume}`;
+      }
+    }
+
+    const myTV = new TV("Panasonic", 1000, 42);
+
+    function increaseVolume() {
+      myTV.increaseVolume();
+    }
+
+    function decreaseVolume() {
+      myTV.decreaseVolume();
+    }
+
+    function setChannel(channel) {
+      myTV.setChannel(channel);
+    }
+
+    function resetTV() {
+      myTV.resetTV();
+    }
+
+    myTV.updateStatus();
+  </script>
+</body>
+</html>
 
